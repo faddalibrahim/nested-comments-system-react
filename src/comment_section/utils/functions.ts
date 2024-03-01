@@ -37,3 +37,12 @@ export function editComment(
   commentId: string,
   newCommentText: string
 ) {}
+
+export function convertToLocaleDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
