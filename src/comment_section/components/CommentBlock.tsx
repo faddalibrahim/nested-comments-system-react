@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // types
-import { CommentBlockProps } from "@/comment_section/utils/types";
+import { Comment, CommentBlockProps } from "@/comment_section/utils/types";
 
 // functions
 import {
@@ -15,15 +15,18 @@ import {
 import Icons from "./Icons";
 
 export default function CommentBlock({
+  allComments,
   comment,
   setAllComments,
+  parentId,
 }: CommentBlockProps) {
   const [showEditBox, setShowEditBox] = useState(false);
   const [commentEditText, setCommentEditText] = useState(comment.text);
+  const [showReplyBox, setShowReplyBox] = useState(false);
 
   return (
-    <div className=" py-7 bg-[rgba(178,178,238,0.1)] rounded-md p-5">
-      <div className="flex justify-between gap-4 flex-wrap">
+    <div className=" mt-3">
+      <div className="flex flex-col justify-between gap-4 bg-[rgba(178,178,238,0.09)] py-4 px-4 rounded-lg">
         <div className="flex gap-3 justify-start items-start">
           <div className="w-[3rem] h-[3rem] rounded-full border border-[0.2rem] border-[rgba(178,178,238,1)]">
             <img
@@ -44,7 +47,7 @@ export default function CommentBlock({
                 <small className="text-gray-600 font-medium">editted</small>
               )}
             </div>
-            <small className="text-gray-600">@GojoSatoru</small>
+            <small className="text-gray-600">{comment.user.handle}</small>
           </div>
         </div>
         <div className="flex flex-col gap-4 grow">
@@ -69,7 +72,13 @@ export default function CommentBlock({
                 <button
                   className="bg-[rgba(59,53,70,1)] font-medium text-[#f3f5f7] px-3 py-1 rounded"
                   onClick={() => {
-                    updateComment(setAllComments, comment.id, commentEditText);
+                    updateComment(
+                      allComments,
+                      setAllComments,
+                      comment.id,
+                      commentEditText,
+                      parentId
+                    );
                     setShowEditBox(false);
                   }}
                 >
@@ -82,11 +91,21 @@ export default function CommentBlock({
           )}
           {!showEditBox && (
             <div className="flex gap-3 text-[rgba(178,178,238,0.5)]">
-              <button className="cursor-pointer p-2 bg-[rgba(178,178,238,0.03)] hover:bg-[rgba(178,178,238,0.2)] rounded-full">
+              <button
+                className="cursor-pointer p-2 bg-[rgba(178,178,238,0.03)] hover:bg-[rgba(178,178,238,0.2)] rounded-full"
+                onClick={() => setShowReplyBox(!showReplyBox)}
+              >
                 <Icons.Reply />
               </button>
               <button
-                onClick={() => deleteComment(setAllComments, comment.id)}
+                onClick={() =>
+                  deleteComment(
+                    allComments,
+                    setAllComments,
+                    comment.id,
+                    parentId
+                  )
+                }
                 className="cursor-pointer p-2 bg-[rgba(178,178,238,0.03)] hover:bg-[rgba(178,178,238,0.2)] rounded-full"
               >
                 <Icons.Delete />
@@ -104,14 +123,33 @@ export default function CommentBlock({
         </div>
       </div>
 
-      {/* {comment?.replies.length > 0 &&
-        comment?.replies.map((reply: Comment) => (
-          <CommentBlock
-            key={reply.id}
-            comment={reply}
-            setAllComments={setAllComments}
-          />
-        ))} */}
+      {showReplyBox && (
+        <>
+          <div className="ml-5 mt-4">
+            <textarea
+              className="bg-[rgba(178,178,238,0.05)] text-white p-4 outline-0 border-0 ring-0 resize-none rounded-md w-full"
+              placeholder="type reply..."
+              name=""
+              id=""
+              rows={3}
+              onChange={(e) => setCommentEditText(e.target.value)}
+            ></textarea>
+          </div>
+
+          <div className="ml-5">
+            {comment?.replies.length > 0 &&
+              comment?.replies.map((reply: Comment) => (
+                <CommentBlock
+                  key={reply.id}
+                  allComments={allComments}
+                  comment={reply}
+                  setAllComments={setAllComments}
+                  parentId={comment.id}
+                />
+              ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
