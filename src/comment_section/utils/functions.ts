@@ -13,6 +13,26 @@ export function newComment(commentText: string, currentUser: User) {
 }
 
 export function addComment(
+  allComments: Comment[],
+  setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
+  commentText: string,
+  currentUser: User,
+  parentId: string | null
+) {
+  if (parentId) {
+    addNestedComment(
+      allComments,
+      setAllComments,
+      commentText,
+      currentUser,
+      parentId
+    );
+  } else {
+    addTopLevelComment(setAllComments, commentText, currentUser);
+  }
+}
+
+function addTopLevelComment(
   setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
   commentText: string,
   currentUser: User
@@ -21,6 +41,35 @@ export function addComment(
     newComment(commentText, currentUser),
     ...prevComments,
   ]);
+}
+
+function addNestedComment(
+  allComments: Comment[],
+  setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
+  commentText: string,
+  currentUser: User,
+  parentId: string
+) {
+  const commentsWithReplies = [...allComments];
+
+  for (let i = 0; i < commentsWithReplies.length; i++) {
+    const comment = commentsWithReplies[i];
+    if (comment.id === parentId) {
+      comment.replies = [
+        newComment(commentText, currentUser),
+        ...comment.replies,
+      ];
+    } else {
+      addNestedComment(
+        comment.replies,
+        setAllComments,
+        commentText,
+        currentUser,
+        parentId
+      );
+    }
+  }
+  setAllComments(commentsWithReplies);
 }
 
 /*********** DELETING COMMENTS ********************/
@@ -74,6 +123,24 @@ function deleteNestedComment(
 /*********** UPDATING COMMENTS ********************/
 
 export function updateComment(
+  allComments: Comment[],
+  setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
+  commentId: string,
+  newCommentText: string,
+  parentId: string | null
+) {
+  // update top-level comment
+
+  if (!parentId) {
+    updateTopLevelComment(setAllComments, commentId, newCommentText);
+    return;
+  }
+
+  // update nested comment
+  updateNestedComment(allComments, setAllComments, commentId, newCommentText);
+}
+
+function updateTopLevelComment(
   setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
   commentId: string,
   newCommentText: string
@@ -92,6 +159,37 @@ export function updateComment(
     })
   );
 }
+
+function updateNestedComment(
+  allComments: Comment[],
+  setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
+  commentId: string,
+  newCommentText: string
+) {
+  const commentsWithReplies = [...allComments];
+
+  for (let i = 0; i < commentsWithReplies.length; i++) {
+    const comment = commentsWithReplies[i];
+    if (comment.id === commentId) {
+      comment.text = newCommentText;
+      comment.isModified = true;
+      comment.modifiedAt = new Date();
+
+      return;
+    } else {
+      updateNestedComment(
+        comment.replies,
+        setAllComments,
+        commentId,
+        newCommentText
+      );
+    }
+  }
+
+  setAllComments(commentsWithReplies);
+}
+
+/*********** CONVERTING DATE ********************/
 
 export function convertToLocaleDate(date: Date) {
   return date.toLocaleDateString("en-US", {
