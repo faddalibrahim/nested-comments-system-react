@@ -32,11 +32,25 @@ export function deleteComment(
   );
 }
 
-export function editComment(
+export function updateComment(
   setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
   commentId: string,
   newCommentText: string
-) {}
+) {
+  setAllComments((prevComments) =>
+    prevComments.map((comment) => {
+      if (comment.id === commentId) {
+        return {
+          ...comment,
+          text: newCommentText,
+          isModified: true,
+          modifiedAt: new Date(),
+        };
+      }
+      return comment;
+    })
+  );
+}
 
 export function convertToLocaleDate(date: Date) {
   return date.toLocaleDateString("en-US", {
