@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Google+Sans:200,300,400,500,600,700,900");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,4 +9,25 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", "Google Sans";
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* background: #f1f1f1; */
+  background: rgba(178, 178, 238, 0.1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(178, 178, 238, 0.5);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
