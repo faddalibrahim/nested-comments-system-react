@@ -23,14 +23,55 @@ export function addComment(
   ]);
 }
 
+/*********** DELETING COMMENTS ********************/
+
 export function deleteComment(
+  allComments: Comment[],
+  setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
+  commentId: string,
+  parentId: string | null
+) {
+  // delete top-level comment
+  if (!parentId) {
+    deleteTopLevelComment(setAllComments, commentId);
+    return;
+  }
+  // delete nested comment
+  deleteNestedComment(allComments, setAllComments, commentId, parentId);
+}
+
+function deleteTopLevelComment(
   setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
   commentId: string
 ) {
-  setAllComments((prevComments) =>
-    prevComments.filter((comment) => comment.id != commentId)
+  setAllComments((prevComments: Comment[]) =>
+    prevComments.filter((comment: Comment) => comment.id != commentId)
   );
 }
+
+function deleteNestedComment(
+  allComments: Comment[],
+  setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
+  commentId: string,
+  parentId: string
+) {
+  const commentsWithReplies = [...allComments];
+
+  for (let i = 0; i < commentsWithReplies.length; i++) {
+    const comment = commentsWithReplies[i];
+    if (comment.id === parentId) {
+      comment.replies = comment.replies.filter(
+        (comment) => comment.id !== commentId
+      );
+    } else {
+      deleteNestedComment(comment.replies, setAllComments, commentId, parentId);
+    }
+  }
+
+  setAllComments(commentsWithReplies);
+}
+
+/*********** UPDATING COMMENTS ********************/
 
 export function updateComment(
   setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
