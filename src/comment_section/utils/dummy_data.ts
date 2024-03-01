@@ -2,17 +2,19 @@ import { Comment, User } from "./types";
 
 export const dummyCurrentUser: User = {
   id: "4540fgdf",
-  name: "Gojo Satoru",
+  name: "Sukuna",
+  handle: "@Sukuna",
   profileImg: "https://blah.com",
 };
 
 export const dummyCommentData: Comment[] = [
   {
     id: "dgy579e",
-    text: "I am top level comment",
+    text: "Throughout the heavens and the earth, I alone am the honored one!",
     user: {
-      id: "4540fgdf",
+      id: "Gojo Satoru",
       name: "Gojo Satoru",
+      handle: "@GojoSatoru",
       profileImg: "https://blah.com",
     },
     replies: [
@@ -22,6 +24,7 @@ export const dummyCommentData: Comment[] = [
         user: {
           id: "4540fgdf",
           name: "Gojo Satoru",
+          handle: "@GojoSatoru",
           profileImg: "https://blah.com",
         },
         replies: [
@@ -31,6 +34,7 @@ export const dummyCommentData: Comment[] = [
             user: {
               id: "4540fgdf",
               name: "Gojo Satoru",
+              handle: "@GojoSatoru",
               profileImg: "https://blah.com",
             },
             replies: [],
@@ -41,19 +45,20 @@ export const dummyCommentData: Comment[] = [
         ],
         createdAt: new Date(),
         modifiedAt: new Date(),
-        isModified: true,
+        isModified: false,
       },
     ],
     createdAt: new Date(),
     modifiedAt: new Date(),
-    isModified: true,
+    isModified: false,
   },
   {
     id: "df634dfdf",
-    text: "I am top level comment 2",
+    text: "Gotta deal with them monkeys asap!",
     user: {
       id: "4540fgdf",
-      name: "Gojo Satoru",
+      name: "Suguru Geto",
+      handle: "@SuguruGeto",
       profileImg: "https://blah.com",
     },
     replies: [
@@ -63,6 +68,7 @@ export const dummyCommentData: Comment[] = [
         user: {
           id: "4540fgdf",
           name: "Gojo Satoru",
+          handle: "@GojoSatoru",
           profileImg: "https://blah.com",
         },
         replies: [],
