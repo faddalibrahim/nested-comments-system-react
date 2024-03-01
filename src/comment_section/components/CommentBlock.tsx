@@ -6,13 +6,15 @@ import { Comment, CommentBlockProps } from "@/comment_section/utils/types";
 
 // functions
 import {
-  convertToLocaleDate,
+  addComment,
   deleteComment,
   updateComment,
+  convertToLocaleDate,
 } from "@/comment_section/utils/functions";
 
 // components
 import Icons from "./Icons";
+import { dummyCurrentUser } from "../utils/dummy_data";
 
 export default function CommentBlock({
   allComments,
@@ -23,6 +25,7 @@ export default function CommentBlock({
   const [showEditBox, setShowEditBox] = useState(false);
   const [commentEditText, setCommentEditText] = useState(comment.text);
   const [showReplyBox, setShowReplyBox] = useState(false);
+  const [commentReplyText, setCommentReplyText] = useState("");
 
   return (
     <div className=" mt-3">
@@ -123,17 +126,43 @@ export default function CommentBlock({
         </div>
       </div>
 
-      {showReplyBox && (
+      {/* REPLIES */}
+
+      {!showEditBox && showReplyBox && (
         <>
-          <div className="ml-5 mt-4">
+          <div className="ml-5 mt-4 flex flex-col items-end gap-2">
             <textarea
               className="bg-[rgba(178,178,238,0.05)] text-white p-4 outline-0 border-0 ring-0 resize-none rounded-md w-full"
               placeholder="type reply..."
               name=""
               id=""
               rows={3}
-              onChange={(e) => setCommentEditText(e.target.value)}
+              value={commentReplyText}
+              onChange={(e) => setCommentReplyText(e.target.value)}
             ></textarea>
+            <div className="flex gap-2">
+              {/* <button
+                className="text-[tomato]"
+                onClick={() => setShowEditBox(false)}
+              >
+                cancel
+              </button> */}
+              <button
+                className="bg-[rgba(59,53,70,1)] font-medium text-[#f3f5f7] px-3 py-1 rounded"
+                onClick={() => {
+                  addComment(
+                    allComments,
+                    setAllComments,
+                    commentReplyText,
+                    dummyCurrentUser,
+                    comment.id
+                  );
+                  setShowEditBox(false);
+                }}
+              >
+                reply
+              </button>
+            </div>
           </div>
 
           <div className="ml-5">
