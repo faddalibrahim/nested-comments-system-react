@@ -22,6 +22,7 @@ export default function CommentSection() {
   return (
     <div className="h-full w-full md:w-[35vw] overflow-y-auto flex flex-col items-center justify-between px-4">
       <CommentEntryBlock
+        allComments={allComments}
         setAllComments={setAllComments}
         currentUser={currentUser}
       />
