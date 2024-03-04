@@ -20,13 +20,9 @@ export function addComment(
   parentId: string | null
 ) {
   if (parentId) {
-    addNestedComment(
-      allComments,
-      setAllComments,
-      commentText,
-      currentUser,
-      parentId
-    );
+    const commentsWithReplies = [...allComments];
+    addNestedComment(commentsWithReplies, commentText, currentUser, parentId);
+    setAllComments(commentsWithReplies);
   } else {
     addTopLevelComment(setAllComments, commentText, currentUser);
   }
@@ -44,14 +40,11 @@ function addTopLevelComment(
 }
 
 function addNestedComment(
-  allComments: Comment[],
-  setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
+  commentsWithReplies: Comment[],
   commentText: string,
   currentUser: User,
   parentId: string
 ) {
-  const commentsWithReplies = [...allComments];
-
   for (let i = 0; i < commentsWithReplies.length; i++) {
     const comment = commentsWithReplies[i];
     if (comment.id === parentId) {
@@ -60,16 +53,9 @@ function addNestedComment(
         ...comment.replies,
       ];
     } else {
-      addNestedComment(
-        comment.replies,
-        setAllComments,
-        commentText,
-        currentUser,
-        parentId
-      );
+      addNestedComment(comment.replies, commentText, currentUser, parentId);
     }
   }
-  setAllComments(commentsWithReplies);
 }
 
 /*********** DELETING COMMENTS ********************/
@@ -86,7 +72,9 @@ export function deleteComment(
     return;
   }
   // delete nested comment
-  deleteNestedComment(allComments, setAllComments, commentId, parentId);
+  const commentsWithReplies = [...allComments];
+  deleteNestedComment(allComments, commentId, parentId);
+  setAllComments(commentsWithReplies);
 }
 
 function deleteTopLevelComment(
@@ -99,13 +87,10 @@ function deleteTopLevelComment(
 }
 
 function deleteNestedComment(
-  allComments: Comment[],
-  setAllComments: React.Dispatch<React.SetStateAction<Comment[]>>,
+  commentsWithReplies: Comment[],
   commentId: string,
   parentId: string
 ) {
-  const commentsWithReplies = [...allComments];
-
   for (let i = 0; i < commentsWithReplies.length; i++) {
     const comment = commentsWithReplies[i];
     if (comment.id === parentId) {
@@ -113,11 +98,9 @@ function deleteNestedComment(
         (comment) => comment.id !== commentId
       );
     } else {
-      deleteNestedComment(comment.replies, setAllComments, commentId, parentId);
+      deleteNestedComment(comment.replies, commentId, parentId);
     }
   }
-
-  setAllComments(commentsWithReplies);
 }
 
 /*********** UPDATING COMMENTS ********************/
