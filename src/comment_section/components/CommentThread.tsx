@@ -6,7 +6,7 @@ export default function CommentThread({
   setAllComments,
 }: CommentThreadProps) {
   return (
-    <div className="flex flex-col gap-10 grow overflow-y-auto w-full pr-2">
+    <div className="flex flex-col gap-5 grow overflow-y-auto w-full pr-2">
       {allComments.length > 0 &&
         allComments.map((comment: Comment) => (
           <CommentBlock

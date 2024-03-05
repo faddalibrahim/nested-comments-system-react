@@ -13,9 +13,9 @@ export default function CommentEntryBlock({
     <div className="flex flex-col items-end gap-2 w-full">
       <textarea
         className="bg-[rgba(178,178,238,0.05)] text-white p-4 outline-0 border-0 ring-0 resize-none rounded-md w-full"
-        placeholder="start typing..."
+        placeholder="type comment..."
         cols={30}
-        rows={5}
+        rows={3}
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
       ></textarea>

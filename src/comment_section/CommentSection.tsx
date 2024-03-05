@@ -21,7 +21,7 @@ export default function CommentSection() {
   const [currentUser] = useState(dummyCurrentUser);
 
   return (
-    <div className="h-full w-full md:w-[35vw] overflow-y-auto flex flex-col items-center justify-between px-4">
+    <div className="h-full w-full md:w-[35vw] overflow-y-auto flex flex-col-reverse md:flex-col items-center justify-between px-4 ">
       <CommentEntryBlock
         allComments={allComments}
         setAllComments={setAllComments}

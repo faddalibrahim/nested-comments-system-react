@@ -170,6 +170,9 @@ export default function CommentBlock({
                     comment.id
                   );
                   setShowEditBox(false);
+                  setCommentReplyText(" ");
+                  setShowReplyBox(false);
+                  setShowReplies(true);
                 }}
               >
                 reply

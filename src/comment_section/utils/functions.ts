@@ -2,7 +2,7 @@ import { User, Comment } from "./types";
 
 export function newComment(commentText: string, currentUser: User) {
   return {
-    id: String(Math.random()),
+    id: String(Math.random() * new Date().getTime()),
     text: commentText,
     user: currentUser,
     replies: [],
