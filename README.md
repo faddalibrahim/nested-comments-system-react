@@ -1,6 +1,8 @@
 # React Nested Comment System
 
-![Banner](banner.svg)
+<!-- ![Banner](banner.svg) -->
+
+[![Read Full Technical Blog Post](banner.svg "Read Full Technical Blog Post")](https://dev.faddalibrahim.com/blog/using-recursion-to-create-nested-comments-system-ft-reactjs)
 
 Replicating social media nested comments systems like reddit.
 
