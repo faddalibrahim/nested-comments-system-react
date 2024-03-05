@@ -28,6 +28,10 @@ export default function CommentBlock({
   const [showReplyBox, setShowReplyBox] = useState(false);
   const [commentReplyText, setCommentReplyText] = useState("");
 
+  const [showReplies, setShowReplies] = useState(false);
+
+  const replyCount = countCommentsDFS(comment.replies);
+
   return (
     <div className=" mt-3">
       <div className="flex flex-col justify-between gap-4 bg-[rgba(178,178,238,0.09)] py-4 px-4 rounded-lg">
@@ -122,20 +126,26 @@ export default function CommentBlock({
               >
                 <Icons.Edit />
               </button>
-              <div>{countCommentsDFS(comment.replies)} replies</div>
+              {replyCount > 0 && (
+                <div
+                  className="flex items-center gap-1 p-2 hover:bg-[rgba(178,178,238,0.1)] cursor-pointer rounded-2xl"
+                  onClick={() => setShowReplies(!showReplies)}
+                >
+                  {showReplies ? <Icons.CaretUp /> : <Icons.CaretDown />}
+                  {`${replyCount} repl${replyCount > 1 ? "ies" : "y"}`}
+                </div>
+              )}
             </div>
           )}
         </div>
       </div>
-
-      {/* REPLIES */}
 
       {!showEditBox && showReplyBox && (
         <>
           <div className="ml-5 mt-4 flex flex-col items-end gap-2">
             <textarea
               className="bg-[rgba(178,178,238,0.05)] text-white p-4 outline-0 border-0 ring-0 resize-none rounded-md w-full"
-              placeholder="type reply..."
+              placeholder={`replying to ${comment.user.handle}`}
               name=""
               id=""
               rows={3}
@@ -166,20 +176,24 @@ export default function CommentBlock({
               </button>
             </div>
           </div>
-
-          <div className="ml-5">
-            {comment?.replies.length > 0 &&
-              comment?.replies.map((reply: Comment) => (
-                <CommentBlock
-                  key={reply.id}
-                  allComments={allComments}
-                  comment={reply}
-                  setAllComments={setAllComments}
-                  parentId={comment.id}
-                />
-              ))}
-          </div>
         </>
+      )}
+
+      {/* REPLIES */}
+
+      {showReplies && (
+        <div className="ml-5">
+          {comment?.replies.length > 0 &&
+            comment?.replies.map((reply: Comment) => (
+              <CommentBlock
+                key={reply.id}
+                allComments={allComments}
+                comment={reply}
+                setAllComments={setAllComments}
+                parentId={comment.id}
+              />
+            ))}
+        </div>
       )}
     </div>
   );
