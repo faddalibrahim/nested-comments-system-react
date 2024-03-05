@@ -182,3 +182,16 @@ export function convertToLocaleDate(date: Date) {
     day: "numeric",
   });
 }
+
+export function countCommentsDFS(allComments: Comment[]) {
+  let count = 0;
+
+  for (const comment of allComments) {
+    count += 1;
+    if (comment.replies.length !== 0) {
+      count += countCommentsDFS(comment.replies);
+    }
+  }
+
+  return count;
+}

@@ -10,6 +10,7 @@ import {
   deleteComment,
   updateComment,
   convertToLocaleDate,
+  countCommentsDFS,
 } from "@/comment_section/utils/functions";
 
 // components
@@ -93,7 +94,7 @@ export default function CommentBlock({
             <p className="text-white">{comment.text}</p>
           )}
           {!showEditBox && (
-            <div className="flex gap-3 text-[rgba(178,178,238,0.5)]">
+            <div className="flex gap-3 text-[rgba(178,178,238,0.5)] items-center">
               <button
                 className="cursor-pointer p-2 bg-[rgba(178,178,238,0.03)] hover:bg-[rgba(178,178,238,0.2)] rounded-full"
                 onClick={() => setShowReplyBox(!showReplyBox)}
@@ -121,6 +122,7 @@ export default function CommentBlock({
               >
                 <Icons.Edit />
               </button>
+              <div>{countCommentsDFS(comment.replies)} replies</div>
             </div>
           )}
         </div>

@@ -13,6 +13,7 @@ import {
 
 // types
 import { Comment } from "@/comment_section/utils/types";
+import { countCommentsDFS } from "./utils/functions";
 
 export default function CommentSection() {
   const [allComments, setAllComments] = useState<Comment[]>(dummyCommentData);
@@ -28,7 +29,8 @@ export default function CommentSection() {
       />
       <br />
       <h1 className="text-white text-2xl w-full text-left">
-        Comments ({allComments.length})
+        {/* Comments ({allComments.length}) */}
+        Comments ({countCommentsDFS(allComments)})
       </h1>
       <br />
       <CommentThread
