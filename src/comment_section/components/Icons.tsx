@@ -51,6 +51,34 @@ const Icons = {
       <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
     </svg>
   ),
+
+  CaretDown: (props: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke-width="2"
+      {...props}
+    >
+      <path d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8H6z" />
+    </svg>
+  ),
+
+  CaretUp: (props: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke-width="2"
+      {...props}
+    >
+      <path d="M6 16a1 1 0 0 1-.8-1.6l6-8a1 1 0 0 1 1.6 0l6 8A1 1 0 0 1 18 16H6z" />
+    </svg>
+  ),
 };
 
 export default Icons;
