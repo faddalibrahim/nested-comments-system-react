@@ -38,7 +38,7 @@ export default function CommentBlock({
         <div className="flex gap-3 justify-start items-start">
           <div className="w-[3rem] h-[3rem] rounded-full border border-[0.2rem] border-[rgba(178,178,238,1)]">
             <img
-              src="https://i.pravatar.cc"
+              src={comment.user.profileImg || "https://i.pravatar.cc"}
               alt=""
               className="rounded-full w-full h-full"
             />
