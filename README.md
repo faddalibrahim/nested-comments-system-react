@@ -1,13 +1,26 @@
-# Nested Comments Using React
+# React Nested Comment System
 
-A few updates currently in progress
+![Banner](banner.svg)
 
-1. React Context API to eliminate prop drilling
-2. Testing with Cypress/React Testing Library
-3. A comprehensive README (with GIF)
+Replicating social media nested comments systems like reddit.
 
-[Full Blog Post](https://dev.faddalibrahim.com/blog/using-recursion-to-create-nested-comments-system-ft-reactjs)
+## Links
 
-[Live Demo](https://nested-comments-react.netlify.app)
+- [Full Technical Write-up](https://dev.faddalibrahim.com/blog/using-recursion-to-create-nested-comments-system-ft-reactjs)
+- [Live Demo](https://nested-comments-react.netlify.app)
+
+## Tools
+
+- [React/Typescript (scaffolded with Vite)](https://vitejs.dev/guide/)
+- [Tailwindcss](https://tailwindcss.com/)
+
+## Run
+
+```sh
+git clone https://github.com/faddalibrahim/nested-comments-system-react.git
+cd nested-comments-system-react
+npm i
+npm run dev
+```
 
 ![Demo](demo.gif)
