@@ -14,7 +14,7 @@ Replicating social media nested comments systems like reddit.
 ## Links
 
 - [Full Technical Write-up](https://dev.faddalibrahim.com/blog/using-recursion-to-create-nested-comments-system-ft-reactjs)
-- [Live Demo](https://nested-comments-react.netlify.app)
+- [Live Demo](https://react-nested-comments-system.netlify.app/)
 
 ## Tools
 
